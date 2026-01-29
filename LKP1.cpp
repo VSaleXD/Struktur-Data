@@ -25,7 +25,6 @@ void cari(Mahasiswa mhs[], int n, int nimCari){
 }
 
 int main() {
-
     Mahasiswa mhs[5];
     strcpy(mhs[0].nama, "John Doe");
     mhs[0].nim = 12345;
@@ -35,16 +34,23 @@ int main() {
 
     vector<Mahasiswa> vecMhs;
     vecMhs.push_back(mhs[0]);
-
     int idx=1;
 
-    printf("Masukkan data 2 mahasiswa baru (nama nim ipk):\n");
-    for(int i=1;i<3;i++){
+    //pakai index biasa    
+    for(int i=0;i<2;i++){
         cin>>mhs[idx].nama>>mhs[idx].nim>>mhs[idx].ipk;
         idx++;
     }
 
-    printf("Pencarian data mahasiswa berdasarkan NIM:\n");
+    //pakai pointer
+    Mahasiswa* ptrMhs = &mhs[idx];;
+    for(int i=0;i<2;i++){
+        cin>>ptrMhs->nama>>ptrMhs->nim>>ptrMhs->ipk;
+        ptrMhs++;
+        idx++;
+    }
+
+    printf("Pencarian data mahasiswa:\n");
     int nimCari;
     for(int i=0;i<2;i++){
         cin>>nimCari;
