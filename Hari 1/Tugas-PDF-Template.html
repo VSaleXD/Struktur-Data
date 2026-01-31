@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pengumpulan Tugas — Struktur Data Hari 1</title>
+    <style>
+      :root {
+        --text: #111;
+        --muted: #666;
+        --border: #ddd;
+        --accent: #0b5fff;
+        --paper: #ffffff;
+        --code-bg: #f7f7f7;
+      }
+      html, body { height: 100%; }
+      body {
+        margin: 0;
+        background: #f2f3f5;
+        color: var(--text);
+        font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+        line-height: 1.35;
+      }
+      .page {
+        width: 210mm;           /* A4 width */
+        min-height: 297mm;      /* A4 height */
+        margin: 16px auto;
+        background: var(--paper);
+        box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+        padding: 20mm;
+      }
+      header h1 {
+        margin: 0 0 4px;
+        font-size: 22px;
+      }
+      header .sub {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .badge {
+        display: inline-block;
+        font-size: 12px;
+        color: #fff;
+        background: var(--accent);
+        padding: 2px 8px;
+        border-radius: 999px;
+        margin-left: 8px;
+      }
+      .info-table { margin-top: 12px; }
+      .info-table table { width: 100%; border-collapse: collapse; }
+      .info-table td {
+        border: 1px solid var(--border);
+        padding: 8px 10px;
+        vertical-align: top;
+      }
+      .info-table td.label { width: 28%; font-weight: 600; background: #fbfbfb; }
+      .section { margin-top: 14px; page-break-inside: avoid; }
+      .section h2 { margin: 0 0 6px; font-size: 16px; }
+      .content { min-height: 60mm; border: 1px dashed #bbb; padding: 10px; }
+      .muted { color: var(--muted); font-size: 12px; }
+      pre.code {
+        white-space: pre-wrap;
+        background: var(--code-bg);
+        border: 1px solid #e2e2e2;
+        padding: 10px;
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 12px;
+      }
+      .signature {
+        display: flex; gap: 16px; justify-content: space-between; margin-top: 24px;
+      }
+      .signature .box { width: 48%; text-align: center; }
+      .signature .line { margin-top: 40mm; border-top: 1px solid var(--border); padding-top: 6px; }
+      .actions { text-align: right; margin-bottom: 8px; }
+      .btn {
+        border: 0;
+        background: var(--accent);
+        color: #fff;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+      }
+      /* Hilangkan margin halaman saat print untuk fokus ke konten */
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      @media print {
+        body { background: var(--paper); margin: 0; }
+        .page { margin: 0; box-shadow: none; padding: 15mm; min-height: auto; }
+        .actions { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="actions">
+        <button class="btn" onclick="window.print()">Cetak / Simpan sebagai PDF</button>
+      </div>
+
+      <header>
+        <h1>Kelompok 2.1</h1>
+        <div class="sub">LKP 1</div>
+      </header>
+
+      <section class="info-table">
+        <table>
+          <tr>
+            <td class="label">Mata Kuliah</td>
+            <td>Struktur Data</td>
+          </tr>
+          <tr>
+            <td class="label">Hari/Tanggal</td>
+            <td>Rabu, 28 Januari 2026</td>
+          </tr>
+          <tr>
+            <td class="label">Judul Tugas</td>
+            <td>LKP1 - Operasi Struct dan Pencarian</td>
+          </tr>
+        </table>
+      </section>
+
+      <section class="section">
+        <h2>Daftar Anggota</h2>
+        <div class="info-table">
+          <table>
+            <tr>
+              <td class="label">No</td>
+              <td class="label">Nama</td>
+              <td class="label">NIM</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>Mochamad Aleandre Moulidouane </td>
+              <td>M0403241105</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Muhammad Anaqi</td>
+              <td>M0403241046</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Khalifah Azka Hikari</td>
+              <td>M0403241150</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Wardah Nabilah Zahiroh</td>
+              <td>G6401231127</td>
+            </tr>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="content">
+          <div class="muted">Kode LKP 1</div>
+          <pre class="code">#include <bits/stdc++.h>
+using namespace std;
+
+struct Mahasiswa {
+    char nama[50];
+    int nim;
+    float ipk;
+};
+
+void cetak(Mahasiswa mhs[], int n){
+    printf("Nama: %s\n", mhs[n].nama);
+    printf("NIM: %d\n", mhs[n].nim);
+    printf("IPK: %.2f\n", mhs[n].ipk);
+}
+
+void cari(Mahasiswa mhs[], int n, int nimCari){
+    for(int i=0;i<n;i++){
+        if(mhs[i].nim == nimCari){
+            printf("Data Mahasiswa ditemukan:\n");
+            cetak(mhs, i);
+            return;
+        }
+    }
+    printf("Data Mahasiswa dengan NIM %d tidak ditemukan.\n", nimCari);
+}
+
+int main() {
+    Mahasiswa mhs[5];
+    strcpy(mhs[0].nama, "John Doe");
+    mhs[0].nim = 12345;
+    mhs[0].ipk = 3.75f;
+
+    cetak(mhs, 0);
+
+    vector<Mahasiswa> vecMhs;
+    vecMhs.push_back(mhs[0]);
+    int idx=1;
+
+    //pakai index biasa    
+    for(int i=0;i<2;i++){
+        cin>>mhs[idx].nama>>mhs[idx].nim>>mhs[idx].ipk;
+        idx++;
+    }
+
+    //pakai pointer
+    Mahasiswa* ptrMhs = &mhs[idx];;
+    for(int i=0;i<2;i++){
+        cin>>ptrMhs->nama>>ptrMhs->nim>>ptrMhs->ipk;
+        ptrMhs++;
+        idx++;
+    }
+
+    printf("Pencarian data mahasiswa:\n");
+    int nimCari;
+    for(int i=0;i<2;i++){
+        cin>>nimCari;
+        cari(mhs, idx, nimCari);
+    }
+
+    return 0;
+}
+          </pre>
+        </div>
+    </div>
+  </body>
+</html>
