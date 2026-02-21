@@ -24,10 +24,12 @@ Analisis perbandingan setiap struktur data pada performa aktivitas sistem dan da
 pertumbuhan data
 
 Target Minggu ke-7 (Progress)
-● Spesifikasi sistem & skenario penggunaan
-● Implementasi minimal 1 struktur data
-● Dataset awal (dummy / simulasi)
-● Pengujian awal insert & search
+● Spesifikasi sistem & skenario penggunaan -> (Wardah)
+● Implementasi minimal 1 struktur data -> unordered map 
+● Dataset awal (dummy / simulasi) -> (Azka)
+● Pengujian awal insert & search -> (Anaqi)
+
+
 Target Minggu ke-14 (Final)
 ● Implementasi lengkap ≥ 2 struktur data
 ● Grafik perbandingan waktu & memori
