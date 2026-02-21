@@ -15,8 +15,10 @@ Membangun sistem inventori yang tetap cepat meski data besar dan membuktikan str
 paling efisien.
 Domain data (minimal)
 ID produk, nama, kategori, stok, harga, status
+
 Aktivitas sistem wajib
 Insert, search, update stok, delete
+
 Fokus analisis
 Analisis perbandingan setiap struktur data pada performa aktivitas sistem dan dampak
 pertumbuhan data
