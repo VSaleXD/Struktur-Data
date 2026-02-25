@@ -5,29 +5,26 @@
 #define TRUE 1
 #define FALSE 0
 
-
 typedef struct Node {
-    int item;
     int data;
     struct Node *next;
 } Node;
 
-/* Function Prototypes */
-void init(Node *s);
-int is_empty(Node *s);
-int is_full(Node *s);
-int push(Node *s, int x);
-int pop(Node *s, int *value);
-int stack_top(Node *s, int *value);
+typedef struct {
+    Node *top;
+} Stack;
+
+int is_empty(Stack *s);
+int is_full(Stack *s);
+int push(Stack *s, int x);
+int pop(Stack *s, int *value);
+int stack_top(Stack *s, int *value);
 
 int main(void)
 {
     int choice, value;
-    char ch;
-    Node* head = nullptr;
-
-
-    init(head);
+    Stack stack;
+    stack.top = NULL;
 
     do {
         printf("\n===== STACK MENU =====\n");
@@ -48,30 +45,26 @@ int main(void)
             case 1:
                 printf("Enter value: ");
                 scanf("%d", &value);
-                if (push(head, value))
+                if (push(&stack, value))
                     printf("Value pushed successfully.\n");
                 else
                     printf("Stack Overflow!\n");
                 break;
-                
             case 2:
-                if (pop(head, &value))
+                if (pop(&stack, &value))
                     printf("Popped value: %d\n", value);
                 else
                     printf("Stack Underflow!\n");
                 break;
-
             case 3:
-                if (stack_top(head, &value))
+                if (stack_top(&stack, &value))
                     printf("Top value: %d\n", value);
                 else
                     printf("Stack is empty.\n");
                 break;
-
             case 4:
                 printf("Exiting...\n");
                 break;
-
             default:
                 printf("Invalid choice!\n");
         }
@@ -80,73 +73,52 @@ int main(void)
 
     } while (choice != 4);
 
+    // Free all remaining nodes
+    while (stack.top != NULL) {
+        Node* temp = stack.top;
+        stack.top = stack.top->next;
+        free(temp);
+    }
+
     return 0;
 }
 
 
-
-void insentAtEnd(Node* &head, int newData) {
-    Node* newNode = new Node();
-    newNode->data = newData;
-    newNode->next = nullptr;
-
-    if (head == nullptr) {
-        head = newNode;
-
-        return;
-    }
-    else {
-        Node* current = head;
-        while (current->next != nullptr) {
-            current = current->next;
-        }
-        current->next = newNode;
-    }
+int is_empty(Stack *s)
+{
+    return (s->top == NULL);
 }
 
-void init(Node *s)
+int is_full(Stack *s)
 {
-    s = nullptr;
+    return FALSE; 
 }
 
-int is_empty(Node *s)
+int push(Stack *s, int x)
 {
-    return (s == nullptr);
-}
-
-int is_full(Node *s)
-{
-    return FALSE; // Linked list stacks are not full in the traditional sense
-}
-
-int push(Node *s, int x)
-{
-    Node* newNode = new Node();
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    if (newNode == NULL) return FALSE;
     newNode->data = x;
-    newNode->next = s;
-    s = newNode;
-
+    newNode->next = s->top;
+    s->top = newNode;
     return TRUE;
 }
 
-int pop(Node *s, int *value)
+int pop(Stack *s, int *value)
 {
     if (is_empty(s))
         return FALSE;
-
-    *value = s->data;
-    Node* temp = s;
-    s = s->next;
-    delete temp;
-
+    Node* temp = s->top;
+    *value = temp->data;
+    s->top = temp->next;
+    free(temp);
     return TRUE;
 }
 
-int stack_top(Node *s, int *value)
+int stack_top(Stack *s, int *value)
 {
     if (is_empty(s))
         return FALSE;
-    
-        *value = s->data;
+    *value = s->top->data;
     return TRUE;
 }

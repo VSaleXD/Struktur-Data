@@ -33,4 +33,12 @@ Target Minggu ke-7 (Progress)
 Target Minggu ke-14 (Final)
 ● Implementasi lengkap ≥ 2 struktur data
 ● Grafik perbandingan waktu & memori
-● Demo aplikasi + laporan analisis
+● Demo aplikasi 
+● Laporan analisis -> wardah
+
+
+Rencana Kerja
+1.Wardah: Buatkan spesifikasi sistem, skenario penggunaan, Kebutuhan sistem -> docs
+2.Ale: Inmplementasi strukdat pake unordered map
+3.Azka: Susun dataset dummy .txt atau di kode langsung (python)
+4.Anaqi: Membuat kode insert dan search, buat di uji nanti dokumentasi hasilnya
