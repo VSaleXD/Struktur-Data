@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-struct data{
+struct Barang {
     int ID;
     string nama;
     int stok;
@@ -10,8 +10,8 @@ struct data{
     string status;
 };
 
-void tambahBarang(unordered_map<int, data>& inventory) {
-    data barang;
+void tambahBarang(unordered_map<int, Barang> &inventory) {
+    Barang barang;
     cout << "Masukkan ID barang: ";
     cin >> barang.ID;
     cout << "Masukkan nama barang: ";
@@ -28,7 +28,7 @@ void tambahBarang(unordered_map<int, data>& inventory) {
     cout << "Barang berhasil ditambahkan!\n";
 }
 
-void tampilkanSemua(const unordered_map<int, data>& inventory) {
+void tampilkanSemua(const unordered_map<int, Barang>& inventory) {
     if (inventory.empty()) {
         cout << "Inventori kosong!\n";
         return;
@@ -45,13 +45,13 @@ void tampilkanSemua(const unordered_map<int, data>& inventory) {
     }
 }
 
-void cariBarang(const unordered_map<int, data>& inventory) {
+void cariBarang(const unordered_map<int, Barang>& inventory) {
     int id;
     cout << "Masukkan ID barang yang dicari: ";
     cin >> id;
     auto it = inventory.find(id);
     if (it != inventory.end()) {
-        const data& barang = it->second;
+        const Barang& barang = it->second;
         cout << "ID: " << barang.ID << endl;
         cout << "Nama: " << barang.nama << endl;
         cout << "Stok: " << barang.stok << endl;
@@ -63,13 +63,13 @@ void cariBarang(const unordered_map<int, data>& inventory) {
     }
 }
 
-void updateBarang(unordered_map<int, data>& inventory) {
+void updateBarang(unordered_map<int, Barang>& inventory) {
     int id;
     cout << "Masukkan ID barang yang ingin diupdate: ";
     cin >> id;
     auto it = inventory.find(id);
     if (it != inventory.end()) {
-        data& barang = it->second;
+        Barang& barang = it->second;
         cout << "Data lama: Nama: " << barang.nama << ", Stok: " << barang.stok << ", Harga: " << barang.harga << ", Kategori: " << barang.kategori << ", Status: " << barang.status << endl;
         cout << "Masukkan nama baru: ";
         cin >> barang.nama;
@@ -87,7 +87,7 @@ void updateBarang(unordered_map<int, data>& inventory) {
     }
 }
 
-void hapusBarang(unordered_map<int, data>& inventory) {
+void hapusBarang(unordered_map<int, Barang>& inventory) {
     int id;
     cout << "Masukkan ID barang yang ingin dihapus: ";
     cin >> id;
@@ -101,7 +101,7 @@ void hapusBarang(unordered_map<int, data>& inventory) {
 }
 
 int main() {
-    unordered_map<int, data> inventory;
+    unordered_map<int, Barang> inventory;
     int pilihan;
     do {
         cout << "\n=== Menu Inventori Gudang ===\n";

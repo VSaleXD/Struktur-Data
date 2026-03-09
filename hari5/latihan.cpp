@@ -36,23 +36,6 @@ Node* insertEnd(Node* head, int data)
     return head;
 }
 
-// buatan sapik
-void insertEnd2(Node* &head, int data)
-{
-    // kalau linked list kosong
-    if (head == NULL)
-        head = newNode(data);
-    
-    // kalau head merujuk ke node terakhir
-    else if (head->next == NULL)
-        head->next = newNode(data);
-
-    // geser ke node berikutnya
-    else
-        insertEnd2(head->next, data);
-
-    return;
-}
 
 void traverse(Node* head)
 {
@@ -64,6 +47,41 @@ void traverse(Node* head)
     cout << head->data << " ";
 
     traverse(head->next);
+}
+
+void insertAfterKey(Node* head, int key, int data)
+{
+    if (head == NULL){
+        return;
+    }
+
+    if(head->next == NULL && head->data != key) {
+        insertEnd(head, data);
+        return;
+    } 
+
+    if(head->data == key) {
+        Node* new_node = newNode(data);
+        new_node->next = head->next;
+        head->next = new_node;
+    }
+    else {
+        insertAfterKey(head->next, key, data);
+    }
+}
+    
+void deleteKey(Node* prev, Node* p, int key)
+{
+    if (p == NULL)
+        return;
+
+    if (p->data == key) {
+        prev->next = p->next;
+        delete p;
+    }
+    else {
+        deleteKey(p, p->next, key);
+    }
 }
 
 // Driver code
@@ -78,12 +96,16 @@ int main()
     head = insertEnd(head, 12);
     head = insertEnd(head, 14);
 
-    // buatan sapik
-    // insertEnd2(head, 6);
-    // insertEnd2(head, 8);
-    // insertEnd2(head, 10);
-    // insertEnd2(head, 12);
-    // insertEnd2(head, 14);
+    traverse(head);
 
+    insertAfterKey(head, 12, 13);
+    insertAfterKey(head, 8, 9);
+    insertAfterKey(head, 15, 16);
+
+    cout << endl;
+    traverse(head);
+    
+    deleteKey(head, head, 12);
+    cout << endl;
     traverse(head);
 }
