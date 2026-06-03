@@ -1,0 +1,539 @@
+21. Perhatikan kode berikut!
+int arr[5]={5,2,4,1,3}; for(int i=0;i<4;i++) for(int j=0;j<4-i;j++) if(arr[j]>arr[j+1]) { int t=arr[j]; arr[j]=arr[j+1]; arr[j+1]=t; } for(int i=0;i<5;i++) printf("%d", arr[i]);
+Apa outputnya?
+a. 12345
+b. 54321
+c. 12453
+d. 15243
+e. 13425
+
+22. Perhatikan kode berikut!
+int arr[6]={9,7,5,3,1,2}; for(int i=0;i<5;i++) for(int j=0;j<5-i;j++) if(arr[j]>arr[j+1]) { int t=arr[j]; arr[j]=arr[j+1]; arr[j+1]=t; } printf("%d", arr[2]);
+Apa outputnya?
+a. 3
+b. 5
+c. 7
+d. 9
+e. 2
+
+23. Perhatikan kode berikut!
+int arr[4]={8,4,6,2}; for(int i=1;i<4;i++) { int key=arr[i],j=i-1; while(j>=0 && arr[j]>key) { arr[j+1]=arr[j]; j--; } arr[j+1]=key; } for(int i=0;i<4;i++) printf("%d", arr[i]);
+Apa outputnya?
+a. 2468
+b. 8642
+c. 2486
+d. 4826
+e. 4268
+
+24. Perhatikan kode berikut!
+int arr[5]={3,1,4,1,5}; for(int i=0;i<5;i++) for(int j=i+1;j<5;j++) if(arr[i]>arr[j]) { int t=arr[i]; arr[i]=arr[j]; arr[j]=t; } for(int i=0;i<5;i++) printf("%d", arr[i]);
+Apa outputnya?
+a. 11345
+b. 54311
+c. 31415
+d. 51134
+e. 14531
+
+25. Perhatikan kode berikut!
+int arr[5]={7,2,9,4,1}; for(int i=0;i<5;i++) for(int j=0;j<4;j++) if(arr[j]>arr[j+1]) { int t=arr[j]; arr[j]=arr[j+1]; arr[j+1]=t; } for(int i=0;i<5;i++) printf("%d", arr[i]);
+Apa outputnya?
+a. 12479
+b. 97421
+c. 12749
+d. 14279
+e. 24719
+
+26. Perhatikan kode berikut!
+int arr[6]={6,5,4,3,2,1}; for(int i=1;i<6;i++) { int key=arr[i],j=i-1; while(j>=0 && arr[j]>key) { arr[j+1]=arr[j]; j--; } arr[j+1]=key; } printf("%d", arr[0]);
+Apa outputnya?
+a. 1
+b. 2
+c. 3
+d. 4
+e. 6
+
+27. Perhatikan kode berikut!
+int arr[5]={2,3,1,5,4}; for(int i=0;i<4;i++) for(int j=0;j<4-i;j++) if(arr[j]>arr[j+1]) { int t=arr[j]; arr[j]=arr[j+1]; arr[j+1]=t; } printf("%d", arr[3]);
+Apa outputnya?
+a. 4
+b. 3
+c. 2
+d. 5
+e. 1
+
+28. Perhatikan kode berikut!
+int arr[4]={7,5,3,1}; for(int i=1;i<4;i++) { int key=arr[i],j=i-1; while(j>=0 && arr[j]>key) { arr[j+1]=arr[j]; j--; } arr[j+1]=key; } for(int i=0;i<4;i++) printf("%d", arr[i]);
+Apa outputnya?
+a. 1357
+b. 7531
+c. 1573
+d. 3157
+e. 1753
+
+29. Perhatikan kode berikut!
+int arr[5]={4,2,5,3,1}; for(int i=0;i<5;i++) for(int j=i+1;j<5;j++) if(arr[i]>arr[j]) { int t=arr[i]; arr[i]=arr[j]; arr[j]=t; } printf("%d", arr[4]);
+Apa outputnya?
+a. 1
+b. 2
+c. 3
+d. 4
+e. 5
+
+30. Perhatikan kode berikut!
+int arr[6]={1,4,2,6,3,5}; for(int i=0;i<5;i++) for(int j=0;j<5-i;j++) if(arr[j]>arr[j+1]) { int t=arr[j]; arr[j]=arr[j+1]; arr[j+1]=t; } for(int i=0;i<6;i++) printf("%d", arr[i]);
+Apa outputnya?
+a. 123456
+b. 654321
+c. 142635
+d. 124635
+e. 134265
+11. Perhatikan kode berikut!
+#define SIZE 5
+int table[SIZE]={0};
+int keys[4]={6,11,16,21};
+for(int i=0;i<4;i++) {
+	int idx=keys[i]%SIZE;
+	while(table[idx]!=0) idx=(idx+1)%SIZE;
+	table[idx]=keys[i];
+}
+for(int i=0;i<SIZE;i++) printf("%d ", table[i]);
+Apa outputnya?
+a. 6 11 16 21 0
+b. 6 0 11 16 21
+c. 6 11 0 16 21
+d. 6 11 16 0 21
+e. 0 6 11 16 21
+
+12. Perhatikan kode berikut!
+int arr[6]={5,3,8,1,4,7};
+for(int i=0;i<5;i++) for(int j=0;j<5-i;j++) if(arr[j]>arr[j+1]) { int t=arr[j]; arr[j]=arr[j+1]; arr[j+1]=t; }
+printf("%d %d", arr[0], arr[5]);
+Apa outputnya?
+a. 1 8
+b. 1 7
+c. 5 7
+d. 3 8
+e. 1 5
+
+13. Perhatikan kode berikut!
+struct Node { int data; Node* next; };
+Node n1={2,NULL}, n2={4,NULL}, n3={6,NULL};
+n1.next=&n2; n2.next=&n3;
+Node* head=&n1;
+head=head->next;
+head->data=10;
+for(Node* p=&n1;p!=NULL;p=p->next) printf("%d ", p->data);
+Apa outputnya?
+a. 2 10 6
+b. 2 4 6
+c. 10 4 6
+d. 2 6 10
+e. 2 10 4
+
+14. Perhatikan kode berikut!
+#define SIZE 6
+int table[SIZE]={0};
+int keys[3]={7,13,19};
+for(int i=0;i<3;i++) {
+	int idx=keys[i]%SIZE;
+	table[idx]=keys[i];
+}
+for(int i=0;i<SIZE;i++) printf("%d ", table[i]);
+Apa outputnya?
+a. 0 13 0 19 0 7
+b. 7 13 19 0 0 0
+c. 0 0 7 13 19 0
+d. 0 7 13 19 0 0
+e. 7 0 13 0 19 0
+
+15. Perhatikan kode berikut!
+int arr[5]={2,4,6,8,10};
+for(int i=0;i<5;i++) arr[i]/=2;
+for(int i=0;i<5;i++) printf("%d", arr[i]);
+Apa outputnya?
+a. 12345
+b. 246810
+c. 1234
+d. 12345
+e. 12345
+
+16. Perhatikan kode berikut!
+struct Node { int data; Node* next; };
+Node n1={1,NULL}, n2={2,NULL}, n3={3,NULL};
+n1.next=&n2; n2.next=&n3;
+Node* head=&n1;
+while(head) { printf("%d", head->data); head=head->next; }
+Apa outputnya?
+a. 123
+b. 321
+c. 12
+d. 23
+e. 1
+
+17. Perhatikan kode berikut!
+#define SIZE 4
+int table[SIZE]={0};
+int keys[3]={5,9,13};
+for(int i=0;i<3;i++) {
+	int idx=keys[i]%SIZE;
+	while(table[idx]!=0) idx=(idx+1)%SIZE;
+	table[idx]=keys[i];
+}
+printf("%d", table[1]);
+Apa outputnya?
+a. 9
+b. 5
+c. 13
+d. 0
+e. 1
+
+18. Perhatikan kode berikut!
+int arr[4]={7,3,5,1};
+for(int i=0;i<3;i++) for(int j=0;j<3-i;j++) if(arr[j]<arr[j+1]) { int t=arr[j]; arr[j]=arr[j+1]; arr[j+1]=t; }
+for(int i=0;i<4;i++) printf("%d", arr[i]);
+Apa outputnya?
+a. 7531
+b. 1357
+c. 7315
+d. 1573
+e. 3571
+
+19. Perhatikan kode berikut!
+struct Node { int data; Node* next; };
+Node n1={5,NULL}, n2={6,NULL}; n1.next=&n2;
+Node* head=&n1;
+head->next->data=8;
+for(Node* p=&n1;p!=NULL;p=p->next) printf("%d ", p->data);
+Apa outputnya?
+a. 5 6
+b. 5 8
+c. 8 6
+d. 6 5
+e. 8 5
+
+20. Perhatikan kode berikut!
+#define SIZE 5
+int table[SIZE]={0};
+int keys[3]={2,7,12};
+for(int i=0;i<3;i++) {
+	int idx=keys[i]%SIZE;
+	while(table[idx]!=0) idx=(idx+1)%SIZE;
+	table[idx]=keys[i];
+}
+for(int i=0;i<SIZE;i++) printf("%d", table[i]);
+Apa outputnya?
+a. 2 7 12 0 0
+b. 2 0 7 0 12
+c. 2 7 0 12 0
+d. 2 0 0 7 12
+e. 0 2 7 12 0
+================ SOAL UTS STRUKTUR DATA (HASH MAP, SORTING, LINKED LIST) ================
+Pilihlah jawaban yang benar!
+
+1. Perhatikan kode berikut!
+#define SIZE 7
+int table[SIZE]={0}; int key=15; int idx=key%SIZE; table[idx]=key; printf("%d", table[1]);
+Apa outputnya?
+a. 15
+b. 1
+c. 0
+d. 7
+e. ERROR
+
+2. Perhatikan kode berikut!
+int arr[5]={4,2,5,1,3};
+for(int i=0;i<4;i++) for(int j=0;j<4-i;j++) if(arr[j]>arr[j+1]) { int t=arr[j]; arr[j]=arr[j+1]; arr[j+1]=t; }
+for(int i=0;i<5;i++) printf("%d", arr[i]);
+Apa outputnya?
+a. 12345
+b. 54321
+c. 45123
+d. 12453
+e. ERROR
+
+3. Perhatikan kode berikut!
+struct Node { int data; Node* next; };
+Node a={7,NULL}, b={8,NULL}, c={9,NULL}; a.next=&b; b.next=&c; Node* p=&a; while(p) { printf("%d", p->data); p=p->next; }
+Apa outputnya?
+a. 789
+b. 987
+c. 897
+d. 978
+e. ERROR
+
+4. Perhatikan kode berikut!
+int arr[6]={3,1,4,1,5,9};
+for(int i=0;i<6;i++) for(int j=i+1;j<6;j++) if(arr[i]>arr[j]) { int t=arr[i]; arr[i]=arr[j]; arr[j]=t; }
+for(int i=0;i<6;i++) printf("%d", arr[i]);
+Apa outputnya?
+a. 113459
+b. 954311
+c. 314159
+d. 911543
+e. ERROR
+
+5. Perhatikan kode berikut!
+#define SIZE 10
+int table[SIZE]={0}; int keys[3]={12,22,32}; for(int i=0;i<3;i++) { int idx=keys[i]%SIZE; table[idx]=keys[i]; } printf("%d", table[2]);
+Apa outputnya?
+a. 32
+b. 22
+c. 12
+d. 0
+e. ERROR
+
+6. Perhatikan kode berikut!
+struct Node { int data; Node* next; };
+Node n1={1,NULL}, n2={2,NULL}, n3={3,NULL}; n1.next=&n2; n2.next=&n3; Node* head=&n1; head=head->next; printf("%d", head->data);
+Apa outputnya?
+a. 1
+b. 2
+c. 3
+d. 0
+e. ERROR
+
+7. Perhatikan kode berikut!
+int arr[4]={8,6,7,5}; for(int i=0;i<3;i++) for(int j=0;j<3-i;j++) if(arr[j]>arr[j+1]) { int t=arr[j]; arr[j]=arr[j+1]; arr[j+1]=t; } printf("%d", arr[0]);
+Apa outputnya?
+a. 5
+b. 6
+c. 7
+d. 8
+e. ERROR
+
+8. Perhatikan kode berikut!
+struct Node { int data; Node* next; };
+Node a={4,NULL}, b={5,NULL}; a.next=&b; Node* p=&a; int sum=0; while(p) { sum+=p->data; p=p->next; } printf("%d", sum);
+Apa outputnya?
+a. 4
+b. 5
+c. 9
+d. 20
+e. ERROR
+
+9. Perhatikan kode berikut!
+#define SIZE 5
+int table[SIZE]={0}; int key=11; int idx=key%SIZE; table[idx]=key; table[(idx+1)%SIZE]=key+1; printf("%d", table[3]);
+Apa outputnya?
+a. 11
+b. 12
+c. 0
+d. 3
+e. ERROR
+
+10. Perhatikan kode berikut!
+int arr[5]={9,7,5,3,1}; for(int i=0;i<2;i++) for(int j=0;j<4-i;j++) if(arr[j]>arr[j+1]) { int t=arr[j]; arr[j]=arr[j+1]; arr[j+1]=t; } printf("%d", arr[2]);
+Apa outputnya?
+a. 5
+b. 7
+c. 9
+d. 3
+e. ERROR
+================ SOAL UTS STRUKTUR DATA (OUTPUT PROGRAM, STRUKTUR DATA) ================
+Pilihlah jawaban yang benar!
+
+1. Perhatikan kode berikut!
+int arr[5] = {1, 3, 5, 7, 9};
+for(int i=0;i<5;i+=2) printf("%d", arr[i]);
+Apa outputnya?
+a. 13579
+b. 159
+c. 37
+d. 135
+e. ERROR
+
+2. Perhatikan kode berikut!
+struct Node { int data; Node* next; };
+Node a = {2, NULL}, b = {4, NULL}, c = {6, NULL}; a.next = &b; b.next = &c; Node* p = &a; while(p) { printf("%d", p->data); p = p->next; }
+Apa outputnya?
+a. 246
+b. 642
+c. 24
+d. 26
+e. ERROR
+
+3. Perhatikan kode berikut!
+int st[3], top=-1; st[++top]=7; st[++top]=8; st[++top]=9; while(top!=-1) printf("%d", st[top--]);
+Apa outputnya?
+a. 987
+b. 789
+c. 978
+d. 897
+e. ERROR
+
+4. Perhatikan kode berikut!
+int q[4], front=0, rear=0; q[rear++]=1; q[rear++]=2; q[rear++]=3; while(front<rear) printf("%d", q[front++]);
+Apa outputnya?
+a. 123
+b. 321
+c. 12
+d. 23
+e. ERROR
+
+5. Perhatikan kode berikut!
+#define SIZE 5
+int arr[SIZE]={5,4,3,2,1}; for(int i=0;i<SIZE;i++) if(arr[i]%2==1) printf("%d", arr[i]);
+Apa outputnya?
+a. 531
+b. 54321
+c. 135
+d. 13
+e. ERROR
+
+6. Perhatikan kode berikut!
+struct Node { int data; Node* next; }; Node n1={10,NULL}, n2={20,NULL}; n1.next=&n2; Node* head=&n1; printf("%d", head->next->data);
+Apa outputnya?
+a. 10
+b. 20
+c. 30
+d. 0
+e. ERROR
+
+7. Perhatikan kode berikut!
+int arr[3]={2,4,6}; for(int i=2;i>=0;i--) printf("%d", arr[i]);
+Apa outputnya?
+a. 246
+b. 642
+c. 24
+d. 62
+e. ERROR
+
+8. Perhatikan kode berikut!
+int st[2], top=-1; st[++top]=1; st[++top]=2; printf("%d", st[top]);
+Apa outputnya?
+a. 1
+b. 2
+c. 3
+d. 0
+e. ERROR
+
+9. Perhatikan kode berikut!
+#define SIZE 3
+int q[SIZE], front=0, rear=0; q[rear++]=5; q[rear++]=6; printf("%d", q[front]);
+Apa outputnya?
+a. 5
+b. 6
+c. 0
+d. 11
+e. ERROR
+
+10. Perhatikan kode berikut!
+#define TABLE_SIZE 5
+int table[TABLE_SIZE]={0}; int key=7; int idx=key%TABLE_SIZE; table[idx]=key; printf("%d", table[2]);
+Apa outputnya?
+a. 7
+b. 2
+c. 0
+d. 5
+e. ERROR
+
+================ SOAL UTS STRUKTUR DATA (OUTPUT PROGRAM) ================
+Pilihlah jawaban yang benar!
+
+1. Perhatikan cuplikan program berikut!
+int st[5], top = -1;
+for(int i=1;i<=3;i++) if(top < 4) st[++top] = i * 10;
+while(top != -1) printf("%d", st[top--]);
+Apa output dari program di atas?
+a. 302010
+b. 102030
+c. 123
+d. 201030
+e. ERROR
+
+2. Perhatikan kode berikut!
+int arr[4] = {2, 4, 6, 8};
+for(int i=3;i>=0;i--) printf("%d", arr[i]);
+Apa outputnya?
+a. 8642
+b. 2468
+c. 864
+d. 246
+e. ERROR
+
+3. Perhatikan kode berikut!
+int q[3], front=0, rear=0;
+q[rear++] = 5;
+q[rear++] = 7;
+printf("%d", q[front++]);
+printf("%d", q[front++]);
+Apa outputnya?
+a. 57
+b. 75
+c. 55
+d. 77
+e. ERROR
+
+4. Perhatikan kode berikut!
+int a=1, b=2, c=3;
+printf("%d", a+b*c);
+Apa outputnya?
+a. 9
+b. 7
+c. 5
+d. 8
+e. ERROR
+
+5. Perhatikan kode berikut!
+int arr[5]={1,2,3,4,5};
+for(int i=0;i<5;i++) if(arr[i]%2==0) printf("%d", arr[i]);
+Apa outputnya?
+a. 24
+b. 135
+c. 12345
+d. 42
+e. ERROR
+
+6. Perhatikan kode berikut!
+int x=0;
+for(int i=1;i<=3;i++) x+=i;
+printf("%d", x);
+Apa outputnya?
+a. 6
+b. 3
+c. 1
+d. 0
+e. ERROR
+
+7. Perhatikan kode berikut!
+int arr[3]={10,20,30};
+for(int i=0;i<3;i++) arr[i] += 5;
+for(int i=0;i<3;i++) printf("%d", arr[i]);
+Apa outputnya?
+a. 152535
+b. 101520
+c. 101525
+d. 152025
+e. ERROR
+
+8. Perhatikan kode berikut!
+int a=5, b=3;
+printf("%d", a/b);
+Apa outputnya?
+a. 1
+b. 2
+c. 0
+d. 1.666
+e. ERROR
+
+9. Perhatikan kode berikut!
+int arr[4]={1,2,3,4};
+for(int i=0;i<4;i++) if(i%2==0) printf("%d", arr[i]);
+Apa outputnya?
+a. 13
+b. 24
+c. 1234
+d. 31
+e. ERROR
+
+10. Perhatikan kode berikut!
+int x=2;
+for(int i=0;i<3;i++) x *= 2;
+printf("%d", x);
+Apa outputnya?
+a. 16
+b. 8
+c. 6
+d. 12
+e. ERROR
+

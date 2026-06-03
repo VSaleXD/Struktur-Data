@@ -1,0 +1,56 @@
+﻿-----------------------------
+Operasi pada Binary Search Tree
+-----------------------------
+1. Tampilkan BST
+2. Hapus node
+3. Tambah node
+4. Keluar
+Ketik angka yang akan anda pilih: Ketik angka yang akan ditambahkan ke BST: Node Root ditambahkan ke dalam Tree
+-----------------------------
+Operasi pada Binary Search Tree
+-----------------------------
+1. Tampilkan BST
+2. Hapus node
+3. Tambah node
+4. Keluar
+Ketik angka yang akan anda pilih: Tidak ada angka tersebut!
+-----------------------------
+Operasi pada Binary Search Tree
+-----------------------------
+1. Tampilkan BST
+2. Hapus node
+3. Tambah node
+4. Keluar
+Ketik angka yang akan anda pilih: Tidak ada angka tersebut!
+-----------------------------
+Operasi pada Binary Search Tree
+-----------------------------
+1. Tampilkan BST
+2. Hapus node
+3. Tambah node
+4. Keluar
+Ketik angka yang akan anda pilih: Tidak ada angka tersebut!
+-----------------------------
+Operasi pada Binary Search Tree
+-----------------------------
+1. Tampilkan BST
+2. Hapus node
+3. Tambah node
+4. Keluar
+Ketik angka yang akan anda pilih: Tidak ada angka tersebut!
+-----------------------------
+Operasi pada Binary Search Tree
+-----------------------------
+1. Tampilkan BST
+2. Hapus node
+3. Tambah node
+4. Keluar
+Ketik angka yang akan anda pilih: Tidak ada angka tersebut!
+-----------------------------
+Operasi pada Binary Search Tree
+-----------------------------
+1. Tampilkan BST
+2. Hapus node
+3. Tambah node
+4. Keluar
+Ketik angka yang akan anda pilih: 

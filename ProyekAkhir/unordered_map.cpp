@@ -22,7 +22,7 @@ void tambahBarang(unordered_map<int, Barang> &inventory) {
     cin >> barang.harga;
     cout << "Masukkan kategori barang: ";
     cin >> barang.kategori;
-    cout << "Masukkan status barang (Tersedia/Tidak Tersedia): ";
+    cout << "Masukkan status barang (Habis/Tersedia/Tidak Aktif): ";
     cin >> barang.status;
     inventory[barang.ID] = barang;
     cout << "Barang berhasil ditambahkan!\n";
@@ -100,6 +100,24 @@ void hapusBarang(unordered_map<int, Barang>& inventory) {
     }
 }
 
+void tambahDariFile(unordered_map<int, Barang>& inventory) {
+    ifstream file("data.txt");
+    if (!file.is_open()) {
+        cout << "Gagal membuka file!\n";
+        return;
+    }
+    int jumlahBarang;
+    file >> jumlahBarang;
+    for (int i = 0; i < jumlahBarang; ++i) {
+        Barang barang;
+        if (!(file >> barang.ID >> barang.nama >> barang.stok >> barang.harga >> barang.kategori >> barang.status)) {
+            break;
+        }
+        inventory[barang.ID] = barang;
+    }
+    cout << "Data berhasil ditambahkan dari file!\n";
+}
+
 int main() {
     unordered_map<int, Barang> inventory;
     int pilihan;
@@ -110,6 +128,7 @@ int main() {
         cout << "3. Update Barang\n";
         cout << "4. Hapus Barang\n";
         cout << "5. Tampilkan Semua Barang\n";
+        cout << "6. Tambah barang dari file\n";
         cout << "0. Keluar\n";
         cout << "Pilih menu: ";
         cin >> pilihan;
@@ -119,6 +138,7 @@ int main() {
             case 3: updateBarang(inventory); break;
             case 4: hapusBarang(inventory); break;
             case 5: tampilkanSemua(inventory); break;
+            case 6: tambahDariFile(inventory); break;
             case 0: cout << "Keluar...\n"; break;
             default: cout << "Pilihan tidak valid!\n";
         }

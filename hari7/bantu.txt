@@ -1,0 +1,153 @@
+DISKUSI KELOMPOK: CARA KERJA PAGE TABLE
+
+1) Konsep Dasar
+- Page table adalah tabel pemetaan dari alamat logis (virtual) ke alamat fisik (RAM).
+- Program melihat alamat virtual, bukan alamat fisik langsung.
+- CPU/MMU menerjemahkan alamat virtual -> fisik menggunakan page table.
+
+2) Komponen Penting
+- Virtual address biasanya dibagi menjadi:
+	p = page number (nomor halaman)
+	d = offset (posisi data di dalam halaman)
+- Physical address biasanya:
+	f = frame number (nomor frame di RAM)
+	d = offset yang sama
+- Page table entry (PTE) berisi frame number + bit status (valid, dirty, reference, protection).
+
+3) Alur Kerja Translasi Alamat
+- Langkah 1: CPU menghasilkan virtual address (p, d).
+- Langkah 2: MMU mencari page table entry untuk page p.
+- Langkah 3: Jika valid, dapat frame f.
+- Langkah 4: Bentuk physical address (f, d), lalu akses RAM.
+- Langkah 5: Jika tidak valid, terjadi page fault.
+
+4) Apa Itu Page Fault
+- Page fault terjadi saat page yang diminta belum ada di RAM.
+- OS akan:
+	1. Cari page di disk (swap/secondary storage).
+	2. Pilih frame kosong atau ganti page lama (replacement).
+	3. Muat page ke RAM.
+	4. Update page table.
+	5. Ulangi instruksi yang tadi gagal.
+
+5) TLB (Translation Lookaside Buffer)
+- TLB adalah cache kecil untuk menyimpan hasil translasi yang sering dipakai.
+- Jika TLB hit: translasi sangat cepat.
+- Jika TLB miss: cek page table di RAM dulu (lebih lambat), lalu update TLB.
+
+6) Kaitan Dengan Gambar di Slide (Hashed Page Table)
+- Pada gambar terlihat hash function: ini konsep hashed page table.
+- Nomor page p di-hash untuk masuk ke bucket tertentu.
+- Jika ada collision, dicari lewat linked list pada bucket tersebut.
+- Setelah ketemu entry yang cocok, didapat frame r/f, lalu gabung dengan offset d.
+- Cocok dipakai saat ruang alamat virtual sangat besar.
+
+7) Contoh Singkat
+- Misal page size = 1024 byte.
+- Virtual address 2050:
+	p = 2050 / 1024 = 2
+	d = 2050 % 1024 = 2
+- Jika page 2 dipetakan ke frame 9,
+	physical address = 9 * 1024 + 2 = 9218
+
+8) Kelebihan dan Kekurangan
+- Kelebihan:
+	1. Isolasi antar proses lebih aman.
+	2. Memori bisa dipakai lebih efisien (virtual memory).
+	3. Program bisa jalan walau ukuran > RAM fisik.
+- Kekurangan:
+	1. Butuh overhead translasi alamat.
+	2. Jika sering page fault, performa turun drastis.
+
+9) Naskah Presentasi Singkat (1-2 menit)
+"Page table adalah mekanisme OS untuk menerjemahkan alamat virtual ke alamat fisik.
+Setiap alamat virtual dipecah menjadi page number dan offset.
+MMU menggunakan page number untuk mencari frame di page table.
+Jika ditemukan, frame digabung dengan offset menjadi alamat fisik.
+Jika tidak ditemukan, terjadi page fault, lalu OS memuat page dari disk ke RAM.
+Untuk mempercepat translasi, sistem memakai TLB sebagai cache translasi.
+Pada slide ini ada hash function, artinya membahas hashed page table,
+di mana page number di-hash ke bucket agar pencarian lebih efisien pada address space besar."
+
+10) Pertanyaan yang Bisa Ditanya Dosen + Jawaban
+- Q: Kenapa offset tidak berubah saat translasi?
+	A: Karena offset menunjukkan posisi data di dalam page, dan posisi itu sama di dalam frame.
+- Q: Bedanya TLB miss dan page fault?
+	A: TLB miss berarti translasi tidak ada di cache TLB, tapi page bisa saja ada di RAM.
+		 Page fault berarti page benar-benar belum ada di RAM.
+- Q: Kenapa pakai hashed page table?
+	A: Agar pencarian entry lebih cepat pada sistem dengan alamat virtual sangat besar.
+
+
+============================================================
+PR: UNIVERSAL HASHING DAN PERFECT HASHING
+============================================================
+
+A) Universal Hashing (versi sederhana)
+- Menurut saya, universal hashing itu bukan cuma satu fungsi hash tetap,
+	tapi kita punya satu keluarga fungsi hash, lalu pilih salah satu secara acak.
+- Tujuannya supaya data yang masuk tidak mudah "menyerang" fungsi hash yang sama.
+	Jadi peluang collision besar bisa ditekan.
+- Intinya:
+	1. Ada banyak kandidat fungsi hash.
+	2. Dipilih satu fungsi secara acak saat awal.
+	3. Secara teori, untuk dua key berbeda, peluang tabrakan kecil.
+- Kenapa ini penting:
+	kalau pakai satu fungsi tetap, kadang ada pola input yang bikin banyak collision.
+	Universal hashing membuat performa lebih stabil secara rata-rata.
+
+Contoh intuitif:
+- Bayangkan ada banyak "aturan pembagian" key ke bucket.
+- Setiap kali sistem dibuat, aturan yang dipakai diacak dari kumpulan aturan tadi.
+- Karena penyerang/input tidak tahu aturan mana yang dipilih,
+	jadi lebih sulit membuat semua key jatuh ke bucket yang sama.
+
+
+B) Perfect Hashing (versi sederhana)
+- Menurut saya, perfect hashing adalah teknik hashing yang dibuat supaya
+	tidak ada collision sama sekali untuk himpunan key tertentu.
+- Biasanya dipakai untuk data statis (jarang berubah), misalnya daftar kata kunci.
+- Kelebihan utamanya:
+	pencarian bisa sangat cepat, mendekati O(1), karena tiap key punya slot unik.
+
+Ide umum perfect hashing dua level:
+- Level 1:
+	key dibagi dulu ke beberapa bucket pakai hash pertama.
+- Level 2:
+	setiap bucket punya tabel kecil sendiri + hash khusus,
+	diatur sampai tidak ada collision di bucket itu.
+- Jika sudah jadi, lookup cepat karena posisi key sudah "pas".
+
+Catatan:
+- Cocok untuk data yang tetap.
+- Kalau sering insert/delete, biayanya bisa mahal karena struktur bisa perlu dibangun ulang.
+
+
+C) Perbedaan Inti (bahasa saya)
+- Universal hashing:
+	mengurangi kemungkinan collision dengan memilih fungsi hash acak dari suatu keluarga.
+- Perfect hashing:
+	menyusun tabel supaya untuk set key tertentu collision = 0.
+- Singkatnya:
+	universal hashing = probabilitas collision kecil,
+	perfect hashing = collision dihilangkan (untuk set data tertentu).
+
+
+D) Kesimpulan Pribadi
+- Universal hashing bagus saat data bisa berubah-ubah dan kita ingin performa tetap aman
+	dari pola input buruk.
+- Perfect hashing bagus saat data tetap dan kita ingin pencarian super cepat tanpa tabrakan.
+- Jadi pemilihan metode tergantung kebutuhan:
+	data dinamis -> universal hashing,
+	data statis -> perfect hashing.
+
+
+E) Checklist Pengumpulan (deadline 15 Maret 2026)
+1. Tulis tangan penjelasan universal hashing dan perfect hashing pakai bahasa sendiri.
+2. Pastikan tulisan terbaca jelas (judul, poin penting, kesimpulan).
+3. Foto hasil tulisan dengan pencahayaan yang cukup.
+4. Gabungkan foto menjadi satu file PDF.
+5. Cek ulang isi PDF (urut halaman dan ketajaman gambar).
+6. Upload ke LMS sebelum 15 Maret 2026.
+
+

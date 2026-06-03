@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kompresi Citra SVD dengan JavaScript</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f9; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .canvas-container { display: flex; gap: 20px; margin-top: 20px; }
+        canvas { border: 1px solid #ccc; max-width: 100%; }
+        .control-panel { margin-top: 15px; padding: 15px; background: #eef; border-radius: 6px; }
+        #loading { color: red; font-weight: bold; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Eksperimen SVD pada Citra</h2>
+    <p>Upload gambar, lalu geser *slider* untuk melihat efek dekomposisi matriks SVD.</p>
+    
+    <input type="file" id="imageInput" accept="image/*">
+    
+    <div class="control-panel">
+        <label for="kSlider">Jumlah Nilai Singular (k) yang dipertahankan: <strong id="kValue">50</strong></label><br>
+        <input type="range" id="kSlider" min="1" max="100" value="50" disabled style="width: 100%;">
+        <p id="loading">Memproses matriks SVD... Mohon tunggu!</p>
+    </div>
+
+    <div class="canvas-container">
+        <div>
+            <h3>Asli (Grayscale)</h3>
+            <canvas id="canvasOriginal"></canvas>
+        </div>
+        <div>
+            <h3>Hasil Rekonstruksi SVD</h3>
+            <canvas id="canvasSvd"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    const imageInput = document.getElementById('imageInput');
+    const canvasOriginal = document.getElementById('canvasOriginal');
+    const canvasSvd = document.getElementById('canvasSvd');
+    const ctxOriginal = canvasOriginal.getContext('2d');
+    const ctxSvd = canvasSvd.getContext('2d');
+    const kSlider = document.getElementById('kSlider');
+    const kValue = document.getElementById('kValue');
+    const loadingText = document.getElementById('loading');
+
+    let svdResult = null;
+    let imgWidth, imgHeight;
+
+    // 1. Menangani Upload Gambar
+    imageInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const img = new Image();
+        img.onload = function() {
+            // Membatasi ukuran gambar agar browser tidak crash saat menghitung SVD
+            const MAX_SIZE = 250;
+            let scale = Math.min(MAX_SIZE / img.width, MAX_SIZE / img.height);
+            imgWidth = Math.floor(img.width * scale);
+            imgHeight = Math.floor(img.height * scale);
+
+            canvasOriginal.width = imgWidth;
+            canvasOriginal.height = imgHeight;
+            canvasSvd.width = imgWidth;
+            canvasSvd.height = imgHeight;
+
+            // Gambar ke canvas
+            ctxOriginal.drawImage(img, 0, 0, imgWidth, imgHeight);
+            
+            // Proses SVD
+            processSVD();
+        };
+        img.src = URL.createObjectURL(file);
+    });
+
+    // 2. Mengekstrak Pixel dan Menghitung SVD
+    function processSVD() {
+        loadingText.style.display = 'block';
+        kSlider.disabled = true;
+
+        // Gunakan setTimeout agar UI sempat memunculkan teks "Memproses..."
+        setTimeout(() => {
+            const imageData = ctxOriginal.getImageData(0, 0, imgWidth, imgHeight);
+            const data = imageData.data;
+            let matrix = [];
+
+            // Konversi ke Grayscale dan bentuk matriks 2D
+            for (let y = 0; y < imgHeight; y++) {
+                let row = [];
+                for (let x = 0; x < imgWidth; x++) {
+                    let index = (y * imgWidth + x) * 4;
+                    // Rumus Grayscale: 0.299*R + 0.587*G + 0.114*B
+                    let gray = 0.299 * data[index] + 0.587 * data[index+1] + 0.114 * data[index+2];
+                    row.push(gray);
+                    
+                    // Update canvas asli menjadi grayscale murni untuk perbandingan
+                    data[index] = data[index+1] = data[index+2] = gray;
+                }
+                matrix.push(row);
+            }
+            ctxOriginal.putImageData(imageData, 0, 0);
+
+            // Hitung SVD menggunakan numeric.js
+            // Mengembalikan object dengan property U, S (diagonal matrix), dan V
+            svdResult = numeric.svd(matrix);
+
+            // Update batas slider sesuai dengan ukuran dimensi gambar
+            let maxK = Math.min(imgWidth, imgHeight);
+            kSlider.max = maxK;
+            kSlider.value = Math.floor(maxK / 4); // Default render 25% dari max
+            kValue.innerText = kSlider.value;
+
+            loadingText.style.display = 'none';
+            kSlider.disabled = false;
+
+            // Rekonstruksi gambar untuk pertama kalinya
+            reconstructImage(parseInt(kSlider.value));
+        }, 100);
+    }
+
+    // 3. Merakit ulang Matriks dengan nilai K tertentu
+    function reconstructImage(k) {
+        if (!svdResult) return;
+        
+        const U = svdResult.U;
+        const S = svdResult.S;
+        const V = svdResult.V; // Di numeric.js, V sudah dalam bentuk V (bukan V transpose)
+
+        const imageData = ctxSvd.createImageData(imgWidth, imgHeight);
+        const data = imageData.data;
+
+        for (let i = 0; i < imgHeight; i++) {
+            for (let j = 0; j < imgWidth; j++) {
+                let sum = 0;
+                // Rumus Rekonstruksi: Perkalian titik U * S * V^T hanya sampai batas k
+                for (let w = 0; w < k; w++) {
+                    sum += U[i][w] * S[w] * V[j][w];
+                }
+                
+                // Pastikan nilai pixel berada di range 0-255
+                let pixelValue = Math.max(0, Math.min(255, sum));
+                
+                let index = (i * imgWidth + j) * 4;
+                data[index] = pixelValue;     // Red
+                data[index+1] = pixelValue;   // Green
+                data[index+2] = pixelValue;   // Blue
+                data[index+3] = 255;          // Alpha (Opacity penuh)
+            }
+        }
+        ctxSvd.putImageData(imageData, 0, 0);
+    }
+
+    // 4. Update gambar saat slider digeser
+    kSlider.addEventListener('input', function(e) {
+        kValue.innerText = e.target.value;
+        reconstructImage(parseInt(e.target.value));
+    });
+
+</script>
+</body>
+</html>

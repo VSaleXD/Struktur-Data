@@ -1,0 +1,65 @@
+Pemahaman Materi Hash Table
+(versi bahasa sendiri)
+
+-------------------------------------------------------------
+1. Universal Hashing
+-------------------------------------------------------------
+
+Universal hashing itu intinya kita tidak pakai satu fungsi hash yang tetap.
+Sebaliknya, kita punya sekumpulan fungsi hash (disebut "family"),
+lalu pilih salah satunya secara acak tiap kali program dijalankan.
+
+Kenapa perlu begini?
+Karena kalau fungsinya selalu sama, ada kemungkinan pola data tertentu
+bikin banyak collision (data numpuk di satu slot).
+Dengan pilih fungsi secara acak, hal itu lebih susah terjadi.
+
+Jadi intinya: universal hashing itu cara buat probabilitas collision
+tetap kecil, tidak peduli datanya seperti apa.
+
+-------------------------------------------------------------
+2. Perfect Hashing
+-------------------------------------------------------------
+
+Perfect hashing itu teknik di mana kita bikin tabel hash
+yang sama sekali tidak ada collision-nya, untuk sekumpulan data tertentu.
+
+Caranya biasanya pakai dua level:
+- Level 1: data dibagi ke beberapa bucket pakai hash pertama.
+- Level 2: tiap bucket punya tabel kecil sendiri dengan hash yang disesuaikan,
+  sampai tidak ada data yang bentrok di dalamnya.
+
+Hasilnya: setiap key langsung punya slot unik, pencarian jadi O(1) pasti.
+
+Cocoknya untuk data yang tidak sering berubah (statis),
+misalnya daftar kata kunci atau kode perintah yang sudah tetap.
+
+-------------------------------------------------------------
+3. Perbedaan Singkat
+-------------------------------------------------------------
+
+Universal hashing  -> fungsi dipilih acak, collision kecil secara probabilitas.
+Perfect hashing    -> tabel dirancang khusus, collision = 0 untuk data tertentu.
+
+-------------------------------------------------------------
+4. Page Table
+-------------------------------------------------------------
+
+Page table itu semacam "buku alamat" yang dipakai OS
+buat nerjemahin alamat virtual (yang dilihat program)
+ke alamat fisik (lokasi asli di RAM).
+
+Alamat virtual dibagi jadi dua bagian:
+  p = nomor page  (menunjuk ke baris di page table)
+  d = offset      (posisi data di dalam page itu)
+
+Alurnya:
+1. Program akses alamat virtual (p, d).
+2. Page table dicek: page p ada di frame mana?
+3. Kalau ketemu -> physical address = frame + offset, langsung akses RAM.
+4. Kalau tidak ketemu -> page fault.
+   OS ambil data dari disk, muat ke RAM, update page table, lalu ulangi.
+
+Manfaatnya:
+- Program bisa jalan walau ukurannya lebih besar dari RAM.
+- Tiap proses punya ruang alamat sendiri, jadi aman dan tidak saling ganggu.
