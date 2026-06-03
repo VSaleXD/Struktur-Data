@@ -1,9 +1,0 @@
-$target = 1500
-
-$load = Measure-Command { "6`n0" | .\unordered_map.exe | Out-Null }
-$search = Measure-Command { "6`n2`n$target`n0" | .\unordered_map.exe | Out-Null }
-$delete = Measure-Command { "6`n4`n$target`n0" | .\unordered_map.exe | Out-Null }
-
-"LOAD_MS=$([math]::Round($load.TotalMilliseconds,2))"
-"SEARCH_MS=$([math]::Round($search.TotalMilliseconds,2))"
-"DELETE_MS=$([math]::Round($delete.TotalMilliseconds,2))"

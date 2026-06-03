@@ -20,16 +20,39 @@ static string tentukanStatus(int stok) {
     return "Tersedia";
 }
 
-class unordered_map {
+static vector<string> splitCSV(const string& baris, char pemisah) {
+    vector<string> hasil;
+    string token;
+    stringstream ss(baris);
+    while (getline(ss, token, pemisah)) {
+        hasil.push_back(token);
+    }
+    return hasil;
+}
+
+static int parseHargaCSV(const string& nilai) {
+    string bersih;
+    for (char ch : nilai) {
+        if (isdigit(static_cast<unsigned char>(ch))) {
+            bersih.push_back(ch);
+        }
+    }
+    if (bersih.empty()) {
+        return 0;
+    }
+    return stoi(bersih);
+}
+
+class strukturDataUnorderedMap {
 private:
-    std::unordered_map<std::string, Barang> data;
+    unordered_map<string, Barang> data;
 
 public:
-    bool insert(const std::pair<std::string, Barang>& p) {
+    bool insert(const pair<string, Barang>& p) {
         return data.emplace(p.first, p.second).second;
     }
 
-    bool search(const std::string& key, Barang& hasil) const {
+    bool search(const string& key, Barang& hasil) const {
         auto it = data.find(key);
         if (it == data.end()) {
             return false;
@@ -38,40 +61,40 @@ public:
         return true;
     }
 
-    bool update(const std::string& key, int value) {
+    bool update(const string& key, int value) {
         auto it = data.find(key);
         if (it == data.end()) {
             return false;
         }
-        it->second.stok = std::max(0, value);
+        it->second.stok = max(0, value);
         it->second.status = tentukanStatus(it->second.stok);
         return true;
     }
 
-    bool hapus(const std::string& key) {
+    bool hapus(const string& key) {
         return data.erase(key) > 0;
     }
 
-    std::size_t size() const {
+    size_t size() const {
         return data.size();
     }
 
     void printAll() const {
-        std::cout << "\nData unordered_map:\n";
+        cout << "\nData unordered_map:\n";
         for (const auto& entry : data) {
             const Barang& b = entry.second;
-            std::cout << b.id << " | " << b.nama << " | " << b.kategori << " | "
-                      << b.stok << " | " << b.harga << " | " << b.status << '\n';
+            cout << b.id << " | " << b.nama << " | " << b.kategori << " | "
+                 << b.stok << " | " << b.harga << " | " << b.status << '\n';
         }
     }
 };
 
-class vector {
+class strukturDataVector {
 private:
-    std::vector<Barang> data;
+    vector<Barang> data;
 
-    int cariIndex(const std::string& key) const {
-        for (std::size_t i = 0; i < data.size(); ++i) {
+    int cariIndex(const string& key) const {
+        for (size_t i = 0; i < data.size(); ++i) {
             if (data[i].nama == key) {
                 return static_cast<int>(i);
             }
@@ -88,7 +111,7 @@ public:
         return true;
     }
 
-    bool search(const std::string& key, Barang& hasil) const {
+    bool search(const string& key, Barang& hasil) const {
         for (const auto& item : data) {
             if (item.nama == key) {
                 hasil = item;
@@ -98,17 +121,17 @@ public:
         return false;
     }
 
-    bool update(const std::string& key, int value) {
+    bool update(const string& key, int value) {
         int index = cariIndex(key);
         if (index == -1) {
             return false;
         }
-        data[static_cast<std::size_t>(index)].stok = std::max(0, value);
-        data[static_cast<std::size_t>(index)].status = tentukanStatus(data[static_cast<std::size_t>(index)].stok);
+        data[static_cast<size_t>(index)].stok = max(0, value);
+        data[static_cast<size_t>(index)].status = tentukanStatus(data[static_cast<size_t>(index)].stok);
         return true;
     }
 
-    bool hapus(const std::string& key) {
+    bool hapus(const string& key) {
         int index = cariIndex(key);
         if (index == -1) {
             return false;
@@ -117,29 +140,73 @@ public:
         return true;
     }
 
-    std::size_t size() const {
+    size_t size() const {
         return data.size();
     }
 
     void printAll() const {
-        std::cout << "\nData vector:\n";
+        cout << "\nData vector:\n";
         for (const auto& b : data) {
-            std::cout << b.id << " | " << b.nama << " | " << b.kategori << " | "
-                      << b.stok << " | " << b.harga << " | " << b.status << '\n';
+            cout << b.id << " | " << b.nama << " | " << b.kategori << " | "
+                 << b.stok << " | " << b.harga << " | " << b.status << '\n';
         }
     }
 };
 
-static Barang buatBarang(int id, const std::string& nama, const std::string& kategori, int stok, int harga) {
+static Barang buatBarang(int id, const string& nama, const string& kategori, int stok, int harga) {
     return Barang{id, nama, kategori, stok, harga, tentukanStatus(stok)};
 }
 
-int main() {
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr);
+static bool importCSV(const string& namaFile, strukturDataVector& inventoriVector, strukturDataUnorderedMap& inventoriMap) {
+    ifstream file(namaFile);
+    if (!file.is_open()) {
+        return false;
+    }
 
-    vector inventoriVector;
-    unordered_map inventoriMap;
+    string baris;
+    bool headerDilewati = false;
+    int idBerurutan = 1;
+
+    while (getline(file, baris)) {
+        if (!headerDilewati) {
+            headerDilewati = true;
+            continue;
+        }
+
+        if (baris.empty()) {
+            continue;
+        }
+
+        vector<string> kolom = splitCSV(baris, ';');
+        if (kolom.size() < 8) {
+            continue;
+        }
+
+        string stockCode = kolom[1];
+        string nama = kolom[2];
+
+        int stok = 0;
+        try {
+            stok = stoi(kolom[3]);
+        } catch (const exception&) {
+            continue;
+        }
+
+        int harga = parseHargaCSV(kolom[5]);
+        string kategori = kolom[7];
+
+        Barang barang = buatBarang(idBerurutan++, nama, kategori, stok, harga);
+        inventoriVector.insert(barang);
+        inventoriMap.insert({stockCode, barang});
+    }
+
+    return true;
+}
+
+int main() {
+
+    strukturDataVector inventoriVector;
+    strukturDataUnorderedMap inventoriMap;
 
     inventoriVector.insert(buatBarang(1, "Laptop A", "Elektronik", 12, 15000000));
     inventoriVector.insert(buatBarang(2, "Mouse B", "Elektronik", 40, 175000));
@@ -151,11 +218,11 @@ int main() {
 
     Barang hasil;
     if (inventoriVector.search("Mouse B", hasil)) {
-        std::cout << "Vector search: " << hasil.nama << " stok " << hasil.stok << '\n';
+        cout << "Vector search: " << hasil.nama << " stok " << hasil.stok << '\n';
     }
 
     if (inventoriMap.search("2", hasil)) {
-        std::cout << "Map search: " << hasil.nama << " stok " << hasil.stok << '\n';
+        cout << "Map search: " << hasil.nama << " stok " << hasil.stok << '\n';
     }
 
     inventoriVector.update("Laptop A", 9);
@@ -164,10 +231,16 @@ int main() {
     inventoriVector.hapus("Kardus C");
     inventoriMap.hapus("3");
 
+    if (importCSV("online_retail_II.csv", inventoriVector, inventoriMap)) {
+        cout << "\nImport CSV berhasil.\n";
+    } else {
+        cout << "\nImport CSV gagal. Pastikan online_retail_II.csv ada di folder yang sama.\n";
+    }
+
     inventoriVector.printAll();
     inventoriMap.printAll();
 
-    std::cout << "\nUkuran vector   : " << inventoriVector.size() << '\n';
-    std::cout << "Ukuran hash map : " << inventoriMap.size() << '\n';
+    cout << "\nUkuran vector   : " << inventoriVector.size() << '\n';
+    cout << "Ukuran hash map : " << inventoriMap.size() << '\n';
     return 0;
 }
