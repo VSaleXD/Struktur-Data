@@ -1,0 +1,26 @@
+id|nama|kategori|stok|harga|status
+1|Barang 00001|ATK|66|386806|Tersedia
+2|Barang 00002|Packaging|155|488669|Tersedia
+3|Barang 00003|Elektronik|77|357912|Tersedia
+4|Barang 00004|Elektronik|100|493962|Tersedia
+5|Barang 00005|ATK|146|398909|Tersedia
+6|Barang 00006|ATK|11|285751|Menipis
+7|Barang 00007|Sparepart|48|384310|Tersedia
+8|Barang 00008|Logistik|109|207691|Tersedia
+9|Barang 00009|ATK|143|276905|Tersedia
+10|Barang 00010|Packaging|133|38364|Tersedia
+11|Barang 00011|Kebutuhan|90|411752|Tersedia
+12|Barang 00012|ATK|50|191401|Tersedia
+13|Barang 00013|Sparepart|148|161720|Tersedia
+14|Barang 00014|Elektronik|2|29837|Menipis
+15|Barang 00015|Elektronik|37|80180|Tersedia
+16|Barang 00016|Elektronik|150|326805|Tersedia
+17|Barang 00017|ATK|155|429481|Tersedia
+18|Barang 00018|Packaging|111|87346|Tersedia
+19|Barang 00019|Elektronik|75|286912|Tersedia
+20|Barang 00020|Elektronik|157|346050|Tersedia
+21|Barang 00021|Packaging|109|338875|Tersedia
+22|Barang 00022|Sparepart|81|267339|Tersedia
+23|Barang 00023|Kebutuhan|41|28370|Tersedia
+24|Barang 00024|Sparepart|95|261394|Tersedia
+25|Barang 00025|Logistik|78|194102|Tersedia

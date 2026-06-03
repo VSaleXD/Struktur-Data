@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct data{
+struct Barang{
     int ID;
     string nama;
     int stok;
@@ -10,25 +10,27 @@ struct data{
     string status;
 };
 
-void tambahBarang(vector<data>& inventory) {
-    data barang;
+void tambahBarang(vector<Barang>& inventory) {
+    Barang barang;
     cout << "Masukkan ID barang: ";
-    cin >> barang.ID;
+    if (!(cin >> barang.ID)) { cin.clear(); cin.ignore(numeric_limits<streamsize>::max(), '\n'); cout << "Input ID tidak valid\n"; return; }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "Masukkan nama barang: ";
-    cin >> barang.nama;
+    getline(cin, barang.nama);
     cout << "Masukkan stok barang: ";
-    cin >> barang.stok;
+    if (!(cin >> barang.stok)) { cin.clear(); cin.ignore(numeric_limits<streamsize>::max(), '\n'); cout << "Input stok tidak valid\n"; return; }
     cout << "Masukkan harga barang: ";
-    cin >> barang.harga;
+    if (!(cin >> barang.harga)) { cin.clear(); cin.ignore(numeric_limits<streamsize>::max(), '\n'); cout << "Input harga tidak valid\n"; return; }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "Masukkan kategori barang: ";
-    cin >> barang.kategori;
+    getline(cin, barang.kategori);
     cout << "Masukkan status barang (Tersedia/Tidak Tersedia): ";
-    cin >> barang.status;
+    getline(cin, barang.status);
     inventory.push_back(barang);
     cout << "Barang berhasil ditambahkan!\n";
 }
 
-void tampilkanSemua(const vector<data>& inventory) {
+void tampilkanSemua(const vector<Barang>& inventory) {
     if (inventory.empty()) {
         cout << "Inventori kosong!\n";
         return;
@@ -45,7 +47,7 @@ void tampilkanSemua(const vector<data>& inventory) {
     }
 }
 
-void cariBarang(const vector<data>& inventory) {
+void cariBarang(const vector<Barang>& inventory) {
     int id;
     cout << "Masukkan ID barang yang dicari: ";
     cin >> id;
@@ -65,7 +67,7 @@ void cariBarang(const vector<data>& inventory) {
     if (!ditemukan) cout << "Barang tidak ditemukan!\n";
 }
 
-void updateBarang(vector<data>& inventory) {
+void updateBarang(vector<Barang>& inventory) {
     int id;
     cout << "Masukkan ID barang yang ingin diupdate: ";
     cin >> id;
@@ -73,16 +75,18 @@ void updateBarang(vector<data>& inventory) {
     for (auto& barang : inventory) {
         if (barang.ID == id) {
             cout << "Data lama: Nama: " << barang.nama << ", Stok: " << barang.stok << ", Harga: " << barang.harga << ", Kategori: " << barang.kategori << ", Status: " << barang.status << endl;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Masukkan nama baru: ";
-            cin >> barang.nama;
+            getline(cin, barang.nama);
             cout << "Masukkan stok baru: ";
-            cin >> barang.stok;
+            if (!(cin >> barang.stok)) { cin.clear(); cin.ignore(numeric_limits<streamsize>::max(), '\n'); cout << "Input stok tidak valid\n"; return; }
             cout << "Masukkan harga baru: ";
-            cin >> barang.harga;
+            if (!(cin >> barang.harga)) { cin.clear(); cin.ignore(numeric_limits<streamsize>::max(), '\n'); cout << "Input harga tidak valid\n"; return; }
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Masukkan kategori baru: ";
-            cin >> barang.kategori;
+            getline(cin, barang.kategori);
             cout << "Masukkan status baru: ";
-            cin >> barang.status;
+            getline(cin, barang.status);
             cout << "Barang berhasil diupdate!\n";
             ditemukan = true;
             break;
@@ -91,7 +95,7 @@ void updateBarang(vector<data>& inventory) {
     if (!ditemukan) cout << "Barang tidak ditemukan!\n";
 }
 
-void hapusBarang(vector<data>& inventory) {
+void hapusBarang(vector<Barang>& inventory) {
     int id;
     cout << "Masukkan ID barang yang ingin dihapus: ";
     cin >> id;
@@ -108,7 +112,7 @@ void hapusBarang(vector<data>& inventory) {
 }
 
 int main() {
-    vector<data> inventory;
+    vector<Barang> inventory;
     int pilihan;
     do {
         cout << "\n=== Menu Inventori Gudang (Vector) ===\n";

@@ -1,0 +1,95 @@
+{
+  "summary": {
+    "itemCount": 5000,
+    "queryCount": 1200,
+    "rounds": 5
+  },
+  "preview": [
+    {
+      "id": "1",
+      "nama": "Barang 00001",
+      "stok": 30,
+      "harga": 458873,
+      "kategori": "Elektronik",
+      "status": "Tersedia"
+    },
+    {
+      "id": "2",
+      "nama": "Barang 00002",
+      "stok": 83,
+      "harga": 341627,
+      "kategori": "ATK",
+      "status": "Tersedia"
+    },
+    {
+      "id": "3",
+      "nama": "Barang 00003",
+      "stok": 71,
+      "harga": 350385,
+      "kategori": "Sparepart",
+      "status": "Tersedia"
+    },
+    {
+      "id": "4",
+      "nama": "Barang 00004",
+      "stok": 64,
+      "harga": 472878,
+      "kategori": "Logistik",
+      "status": "Tersedia"
+    },
+    {
+      "id": "5",
+      "nama": "Barang 00005",
+      "stok": 141,
+      "harga": 422081,
+      "kategori": "Kebutuhan",
+      "status": "Tersedia"
+    },
+    {
+      "id": "6",
+      "nama": "Barang 00006",
+      "stok": 107,
+      "harga": 440171,
+      "kategori": "Kebutuhan",
+      "status": "Tersedia"
+    },
+    {
+      "id": "7",
+      "nama": "Barang 00007",
+      "stok": 105,
+      "harga": 495816,
+      "kategori": "Logistik",
+      "status": "Tersedia"
+    },
+    {
+      "id": "8",
+      "nama": "Barang 00008",
+      "stok": 84,
+      "harga": 95937,
+      "kategori": "Elektronik",
+      "status": "Tersedia"
+    }
+  ],
+  "benchmark": {
+  "vector": {
+    "buildDuration": 1.3742,
+    "searchDuration": 28.2586,
+    "updateDuration": 4.3872,
+    "deleteDuration": 116.2516,
+    "searchHits": 1200,
+    "checksum": 23753073895,
+    "memoryBytes": 438342,
+    "activeCount": 4885
+  },
+  "map": {
+    "buildDuration": 5.1020,
+    "searchDuration": 0.2999,
+    "updateDuration": 0.0874,
+    "deleteDuration": 0.0462,
+    "searchHits": 1200,
+    "checksum": 23753073895,
+    "memoryBytes": 565120,
+    "activeCount": 4885
+  }
+  }
+}
